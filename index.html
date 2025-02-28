@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>quotations-app</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
 </head>
+
 <body>
     <h1>Mes citations</h1>
     <h2>Gestionnaire de citations en ligne</h2>
     <h3>0 citations</h3>
     <hr>
-    <form action="" id="form">
-        <label for="quote">La citation :</label>
-        <input type="text" id="quote">
-        <label for="person-quoted">Le nom de l'auteur ou de l'autrice :</label>
-        <input type="text" id="person-quoted">
+    <form id="form">
+        <label for="quote">La citation : <input type="text" id="quote"></label>
+        <label for="person-quoted">Le nom de l'auteur ou de l'autrice : <input type="text" id="person-quoted"></label>
         <button id="submit-button">Valider</button>
     </form>
     <div id="quote-list">
@@ -24,4 +26,5 @@
         </div>
     </div>
 </body>
+
 </html>
