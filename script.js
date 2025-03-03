@@ -1,40 +1,60 @@
 // init variables
-const form = document.querySelector('#form');
-const quote = document.querySelector('#quote');
-const personQuoted = document.querySelector('#person-quoted');
+
+const submitButton = document.querySelector('#submit-button');
 const quoteList = document.querySelector('#quote-list');
-let text = "";
-let author = "";
-let quoteCount = 1; // already one quote of Simone de Beauvoir
+const counter = document.querySelector('#counter')
+let quotesArray = JSON.parse(localStorage.getItem("quotesArrayLS")) || [];
+let quoteCount = quotesArray.length;
 
 
 // init functions
-function getQuotation() {
-    text = quote.value;
-    author = personQuoted.value;
-}
 
 function addQuote(text, author) {
-    const quoteBlock = document.createElement('p');
-    const authorBlock = document.createElement('p');
-    const quoteDiv = document.createElement('div');
-    const count = document.querySelector('#count');
-
-    quoteBlock.classList.add('text');
-    quoteBlock.innerText = `Citation : "${text}"`;
-    authorBlock.classList.add('auhtor');
-    authorBlock.innerText = `Auteur/Autrice : ${author}`;
-    quoteDiv.classList.add('quote');
-    quoteDiv.appendChild(quoteBlock);
-    quoteDiv.appendChild(authorBlock);
-    quoteList.appendChild(quoteDiv);
+    printArray(text, author);
     quoteCount++;
-    count.innerText = `${quoteCount} citations`;
+    counter.innerText = `${quoteCount} citations`;
 }
 
+function printArray(text, author) {
+    const newText = document.createElement('p');
+    const newAuthor = document.createElement('p');
+    const newQuote = document.createElement('div');
+
+    newText.classList.add('text');
+    newText.innerText = `Citation : "${text}"`;
+    newAuthor.classList.add('author');
+    newAuthor.innerText = `Auteur : ${author}`;
+    newQuote.classList.add('quote');
+    newQuote.appendChild(newText);
+    newQuote.appendChild(newAuthor);
+    document.querySelector('#quote-list').appendChild(newQuote);
+}
+
+function stockQuote(text, author) {
+    const oneQuote = {
+        text: text,
+        author: author
+    }
+
+    quotesArray.push(oneQuote);
+    localStorage.setItem("quotesArrayLS", JSON.stringify(quotesArray));
+}
+
+function updateQuoteList() {
+    quotesArray.forEach((Element) => {
+        printArray(Element.text, Element.author);
+    })
+    counter.innerText = `${quoteCount} citations !`
+}
 
 // execute code
-form.addEventListener('submit', () => {
-    getQuotation();
+
+updateQuoteList();
+submitButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    const text = document.querySelector('#quote').value;
+    const author = document.querySelector('#person-quoted').value;
+
     addQuote(text, author);
+    stockQuote(text, author);
 })
